@@ -11,7 +11,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Google Sheets API setup
 const sheets = google.sheets('v4');
 const auth = new google.auth.GoogleAuth({
-  keyFile: 'path/to/your-service-account-file.json', // Update this path
+//   keyFile: 'path/to/your-service-account-file.json', // Update this path
   scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
 });
 
