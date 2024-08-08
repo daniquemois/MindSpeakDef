@@ -1,0 +1,277 @@
+:root {
+  /* Default color scheme */
+  --nouns: #FBAF3C;
+  --pronouns: #FBE27F;
+  --verbs: #9ADF7D;
+  --adjectives: #66C4FB;
+  --prepositions: #FB88CF;
+  --questions: #A579FB;
+  --negations: #FB4C4C;
+  --adverbs: #BE9780;
+  --conjunctions: white;
+  --determiners: #434343;
+}
+
+.theme-pastel {
+  --nouns: #FFA471;
+  --pronouns: #FFD07D;
+  --verbs: #A9F4A3;
+  --adjectives: #A3DCF4;
+  --prepositions: #FDC1C1;
+  --questions: #D8C1FD;
+  --negations: #FF7C7C;
+  --adverbs: #C6A068;
+  --conjunctions: white;
+  --determiners: #434343;
+}
+
+.theme-contrast {
+  --nouns: #FF9A00;
+  --pronouns: #FFCC00;
+  --verbs: #4BFF00;
+  --adjectives: #00A1FF;
+  --prepositions: #FF009D;
+  --questions: #5600FF;
+  --negations: #FF0000;
+  --adverbs: #8D451B;
+  --conjunctions: white;
+  --determiners: #000000;
+}
+
+.theme-dark {
+  --nouns: #B8740C;
+  --pronouns: #B79407;
+  --verbs: #447032;
+  --adjectives: #1772A7;
+  --prepositions: #8B0B5A;
+  --questions: #553F81;
+  --negations: #A42E2E;
+  --adverbs: #603B25;
+  --conjunctions: white;
+  --determiners: #1F1F1F;
+}
+
+button, a {
+  background-color: white;
+  border: 0.4rem solid transparent;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem 1rem 1rem 1rem;
+}
+button.werkwoord, a.werkwoord {
+  border-color: var(--verbs);
+}
+button.werkwoord#categorie, a.werkwoord#categorie {
+  background-color: var(--verbs);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #78AF61, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #62924E, 0 -20px 1px -9px rgba(0, 0, 0, 0.15);
+}
+button.zelfstandig_naamwoord, a.zelfstandig_naamwoord {
+  border-color: var(--nouns);
+}
+button.zelfstandig_naamwoord#categorie, a.zelfstandig_naamwoord#categorie {
+  background-color: var(--nouns);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #DD9B37, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #B37D2C, 0 -20px 1px -9px rgba(0, 0, 0, 0.15);
+}
+button.persoonlijk_voornaamwoord, a.persoonlijk_voornaamwoord {
+  border-color: var(--pronouns);
+}
+button.persoonlijk_voornaamwoord#categorie, a.persoonlijk_voornaamwoord#categorie {
+  background-color: var(--pronouns);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #D0BB67, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #9E8E4E, 0 -20px 1px -9px rgba(0, 0, 0, 0.15);
+}
+button.belangrijk, a.belangrijk {
+  border-color: var(--negations);
+}
+button.belangrijk#categorie, a.belangrijk#categorie {
+  background-color: var(--negations);
+}
+button.vraagwoord, a.vraagwoord {
+  border-color: var(--questions);
+}
+button.vraagwoord#categorie, a.vraagwoord#categorie {
+  background-color: var(--questions);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #926CC2, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #705297, 0 -20px 1px -9px rgba(0, 0, 0, 0.15);
+}
+button.voornaamwoord, a.voornaamwoord {
+  border-color: var(--determiners);
+}
+button.voornaamwoord#categorie, a.voornaamwoord#categorie {
+  background-color: var(--determiners);
+}
+button.ja, a.ja {
+  border-color: var(--verbs);
+}
+button.nee, a.nee {
+  border-color: var(--negations);
+}
+button#categorie, a#categorie {
+  align-self: flex-end;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100% - 10px);
+  text-align: center;
+  background-color: white;
+  z-index: 1;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #D1D1D1, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #A5A5A5, 0 -20px 1px -9px rgba(0, 0, 0, 0.15);
+}
+
+body {
+  height: 100vh;
+}
+body nav {
+  height: 1.5rem;
+  background-color: lime;
+}
+body main {
+  height: calc(100% - 1.5rem);
+}
+body main .soundboard {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 5fr;
+  background-color: #D2E1FF;
+}
+body main .soundboard .topbar {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr 1fr;
+  background-color: #8EB5FF;
+  padding: 0.5rem;
+  gap: 1rem;
+}
+body main .soundboard .topbar div {
+  background-color: white;
+  border-radius: 1rem 1rem 1rem 1rem;
+}
+body main .soundboard .middle {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  gap: 1rem;
+  padding-top: 0.5rem;
+}
+body main .soundboard .middle .nav-left {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(5, 1fr);
+  gap: 1rem;
+  height: 100%;
+  padding-left: 0.5rem;
+  margin-left: -1.5rem;
+  padding-bottom: 0.5rem;
+}
+body main .soundboard .middle .nav-left button, body main .soundboard .middle .nav-left a {
+  border-radius: 0px 1rem 1rem 0px;
+  border: 1px solid #DDD;
+  box-shadow: 4px 6px 4px 0px rgba(0, 0, 0, 0.25);
+}
+body main .soundboard .middle .dynamic {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  padding-right: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+#output {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  padding: 0rem 1rem;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  overflow-x: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+#output::-webkit-scrollbar {
+  display: none;
+}
+
+#account .center {
+  padding-right: 0.5rem;
+  padding-bottom: 0.5rem;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 1rem;
+}
+#account .center .settings {
+  display: grid;
+  grid-template-rows: 2fr 3fr;
+  gap: 1rem;
+}
+#account .center .settings #avatar a {
+  height: 100%;
+  border: 0.4rem solid var(--pronouns);
+}
+#account .center .settings section:not(#avatar) {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+#account .center .settings section:not(#avatar) a {
+  align-self: flex-end;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100% - 10px);
+  text-align: center;
+  z-index: 1;
+  background-color: #FF9E9E;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #E58D8D, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #BD7575, 0 -20px 1px -9px rgba(0, 0, 0, 0.15);
+}
+#account .center .avatar {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+#account .center .avatar #av1, #account .center .avatar #av2, #account .center .avatar #av3 {
+  align-self: flex-end;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100% - 10px);
+  text-align: center;
+  z-index: 1;
+  background-color: var(--adjectives);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #4EACE4, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #4E94BC, 0 -20px 1px -9px rgba(0, 0, 0, 0.15);
+}
+#account .center .avatar.uiterlijk {
+  border: 0.4rem solid var(--adjectives);
+}
+#account .center .avatar.instelling {
+  border: 0.4rem solid #FF9E9E;
+}
+
+@font-face {
+  font-family: "ITC Avant Garde Gothic";
+  src: url("../fonts/custom-font.otf") format("opentype");
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  text-transform: lowercase;
+  font-family: "ITC Avant Garde Gothic", sans-serif;
+  font-weight: normal;
+}
+
+body {
+  background-color: #D2E1FF;
+  font-family: "ITC Avant Garde Gothic", sans-serif;
+  margin: 0;
+  padding: 0;
+}/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,74 @@
+#account{
+    .center{
+        padding-right: .5rem;
+        padding-bottom: .5rem;
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+        gap: 1rem;
+        .settings{
+            display: grid;
+            grid-template-rows: 2fr 3fr;
+            gap: 1rem;
+            #avatar{
+                a{
+                    height: 100%;
+                    border: .4rem solid var(--pronouns);
+                }
+            }
+            section:not(#avatar){
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+                a{
+                    align-self: flex-end;
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    width: 100%;
+                    height: calc(100% - 10px);
+                    text-align: center;
+                    z-index: 1; 
+                    background-color: $mindspeak-pink;
+                    box-shadow:
+                    0 1px 1px rgba(0,0,0,0.15),
+                    0 -10px 0 -5px $pinkstack,
+                    0 -10px 1px -4px rgba(0,0,0,0.15),
+                    0 -20px 0 -10px $pinkstack2,
+                    0 -20px 1px -9px rgba(0,0,0,0.15);
+                }
+            }
+        }
+        .avatar{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            #av1, #av2, #av3{
+                align-self: flex-end;
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                width: 100%;
+                height: calc(100% - 10px);
+                text-align: center;
+                z-index: 1; 
+                background-color: var(--adjectives);
+                box-shadow:
+                0 1px 1px rgba(0,0,0,0.15),
+                0 -10px 0 -5px $adjective-stack1,
+                0 -10px 1px -4px rgba(0,0,0,0.15),
+                0 -20px 0 -10px $adjective-stack2,
+                0 -20px 1px -9px rgba(0,0,0,0.15);
+            }
+            &.uiterlijk{
+                border: .4rem solid var(--adjectives);
+            }
+            &.instelling{
+                border: .4rem solid $mindspeak-pink;
+            }
+        }
+    }
+}

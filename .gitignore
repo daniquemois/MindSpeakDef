@@ -1,2 +1,4 @@
 node_modules
 mindspeak.json
+package-lock.json
+.env

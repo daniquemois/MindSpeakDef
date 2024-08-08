@@ -1,0 +1,100 @@
+button, a {
+    background-color: white;
+    border: .4rem solid transparent;
+    font-size: .8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem 1rem 1rem 1rem;
+    &.werkwoord {
+        border-color: var(--verbs);
+        &#categorie {
+            background-color: var(--verbs);
+            box-shadow:
+            0 1px 1px rgba(0,0,0,0.15),
+            0 -10px 0 -5px $verb-stack1,
+            0 -10px 1px -4px rgba(0,0,0,0.15),
+            0 -20px 0 -10px $verb-stack2,
+            0 -20px 1px -9px rgba(0,0,0,0.15);
+        }
+    }
+    &.zelfstandig_naamwoord {
+        border-color: var(--nouns);
+        &#categorie {
+            background-color: var(--nouns);
+            box-shadow:
+            0 1px 1px rgba(0,0,0,0.15),
+            0 -10px 0 -5px $noun-stack1,
+            0 -10px 1px -4px rgba(0,0,0,0.15),
+            0 -20px 0 -10px $noun-stack2,
+            0 -20px 1px -9px rgba(0,0,0,0.15);
+        }
+    }
+    &.persoonlijk_voornaamwoord {
+        border-color: var(--pronouns);
+        &#categorie {
+            background-color: var(--pronouns);
+            box-shadow:
+            0 1px 1px rgba(0,0,0,0.15),
+            0 -10px 0 -5px $pronoun-stack1,
+            0 -10px 1px -4px rgba(0,0,0,0.15),
+            0 -20px 0 -10px $pronoun-stack2,
+            0 -20px 1px -9px rgba(0,0,0,0.15);
+        }
+    }
+
+    &.belangrijk {
+        border-color: var(--negations);
+        &#categorie {
+            background-color: var(--negations);
+        }
+    }
+
+    &.vraagwoord {
+        border-color: var(--questions);
+        &#categorie {
+            background-color: var(--questions);
+            box-shadow:
+            0 1px 1px rgba(0,0,0,0.15),
+            0 -10px 0 -5px $question-stack1,
+            0 -10px 1px -4px rgba(0,0,0,0.15),
+            0 -20px 0 -10px $question-stack2,
+            0 -20px 1px -9px rgba(0,0,0,0.15);
+        }
+    }
+
+    &.voornaamwoord {
+        border-color: var(--determiners);
+        &#categorie {
+            background-color: var(--determiners);
+        }
+    }
+
+    &.ja {
+        border-color: var(--verbs);
+    }
+
+    &.nee {
+        border-color: var(--negations);
+    }
+
+    &#categorie {
+        align-self: flex-end;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        height: calc(100% - 10px);
+        text-align: center;
+        background-color: white;
+        z-index: 1; 
+        box-shadow:
+            0 1px 1px rgba(0,0,0,0.15),
+            0 -10px 0 -5px $stack-1,
+            0 -10px 1px -4px rgba(0,0,0,0.15),
+            0 -20px 0 -10px $stack-2,
+            0 -20px 1px -9px rgba(0,0,0,0.15);
+    }
+}

@@ -1,0 +1,120 @@
+// Basiskleuren
+$mindspeak-blue: #8EB5FF;
+$mindspeak-pink: #FF9E9E;
+$mindspeak-lightblue: #D2E1FF;
+$mindspeak-lightpink: #FFD4D4;
+$stack-1: #D1D1D1;
+$stack-2: #A5A5A5;
+$pinkstack: #E58D8D;
+$pinkstack2: #BD7575;
+
+// Default color scheme
+$nouns: #FBAF3C;
+$pronouns: #FBE27F;
+$verbs: #9ADF7D;
+$adjectives: #66C4FB;
+$prepositions: #FB88CF;
+$questions: #A579FB;
+$negations: #FB4C4C;
+$adverbs: #BE9780;
+$conjunctions: white;
+$determiners: #434343;
+$question-stack1: #926CC2;
+$question-stack2: #705297;
+$pronoun-stack1: #D0BB67;
+$pronoun-stack2: #9E8E4E;
+$verb-stack1: #78AF61;
+$verb-stack2: #62924E;
+$noun-stack1: #DD9B37;
+$noun-stack2: #B37D2C;
+$adjective-stack1: #4EACE4;
+$adjective-stack2: #4E94BC;
+
+// Pastel mode color scheme
+$nouns-pastel: #FFA471;
+$pronouns-pastel: #FFD07D;
+$verbs-pastel: #A9F4A3;
+$adjectives-pastel: #A3DCF4;
+$prepositions-pastel: #FDC1C1;
+$questions-pastel: #D8C1FD;
+$negations-pastel: #FF7C7C;
+$adverbs-pastel: #C6A068;
+$conjunctions-pastel: white;
+$determiners-pastel: #434343;
+
+// High contrast mode color scheme
+$nouns-contrast: #FF9A00;
+$pronouns-contrast: #FFCC00;
+$verbs-contrast: #4BFF00;
+$adjectives-contrast: #00A1FF;
+$prepositions-contrast: #FF009D;
+$questions-contrast: #5600FF;
+$negations-contrast: #FF0000;
+$adverbs-contrast: #8D451B;
+$conjunctions-contrast: white;
+$determiners-contrast: #000000;
+
+// Dark mode color scheme
+$nouns-dark: #B8740C;
+$pronouns-dark: #B79407;
+$verbs-dark: #447032;
+$adjectives-dark: #1772A7;
+$prepositions-dark: #8B0B5A;
+$questions-dark: #553F81;
+$negations-dark: #A42E2E;
+$adverbs-dark: #603B25;
+$conjunctions-dark: white;
+$determiners-dark: #1F1F1F;
+
+:root {
+    /* Default color scheme */
+    --nouns: #{$nouns};
+    --pronouns: #{$pronouns};
+    --verbs: #{$verbs};
+    --adjectives: #{$adjectives};
+    --prepositions: #{$prepositions};
+    --questions: #{$questions};
+    --negations: #{$negations};
+    --adverbs: #{$adverbs};
+    --conjunctions: #{$conjunctions};
+    --determiners: #{$determiners};
+}
+
+.theme-pastel {
+    --nouns: #{$nouns-pastel};
+    --pronouns: #{$pronouns-pastel};
+    --verbs: #{$verbs-pastel};
+    --adjectives: #{$adjectives-pastel};
+    --prepositions: #{$prepositions-pastel};
+    --questions: #{$questions-pastel};
+    --negations: #{$negations-pastel};
+    --adverbs: #{$adverbs-pastel};
+    --conjunctions: #{$conjunctions-pastel};
+    --determiners: #{$determiners-pastel};
+}
+
+.theme-contrast {
+    --nouns: #{$nouns-contrast};
+    --pronouns: #{$pronouns-contrast};
+    --verbs: #{$verbs-contrast};
+    --adjectives: #{$adjectives-contrast};
+    --prepositions: #{$prepositions-contrast};
+    --questions: #{$questions-contrast};
+    --negations: #{$negations-contrast};
+    --adverbs: #{$adverbs-contrast};
+    --conjunctions: #{$conjunctions-contrast};
+    --determiners: #{$determiners-contrast};
+}
+
+.theme-dark {
+    --nouns: #{$nouns-dark};
+    --pronouns: #{$pronouns-dark};
+    --verbs: #{$verbs-dark};
+    --adjectives: #{$adjectives-dark};
+    --prepositions: #{$prepositions-dark};
+    --questions: #{$questions-dark};
+    --negations: #{$negations-dark};
+    --adverbs: #{$adverbs-dark};
+    --conjunctions: #{$conjunctions-dark};
+    --determiners: #{$determiners-dark};
+}

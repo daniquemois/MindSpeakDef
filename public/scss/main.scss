@@ -1,0 +1,36 @@
+// Importing variables and mixins
+@import 'utils/variables';
+
+// Importing components
+@import 'components/nav';
+@import 'components/tiles';
+@import 'components/grid';
+@import 'components/output';
+
+// Importing pages
+@import 'pages/account';
+
+
+@font-face {
+    font-family: 'ITC Avant Garde Gothic';
+    src: url('../fonts/custom-font.otf') format('opentype');
+}
+// Global styles
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+*{
+    margin: 0;
+    text-transform: lowercase;
+    font-family: 'ITC Avant Garde Gothic', sans-serif;
+    font-weight: normal;
+}
+body {
+    background-color: $mindspeak-lightblue;
+    font-family: 'ITC Avant Garde Gothic', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
