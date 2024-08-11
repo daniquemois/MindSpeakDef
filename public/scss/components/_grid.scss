@@ -1,35 +1,58 @@
-body{
+body {
     height: 100vh;
-    nav{
-        height: 1.5rem;
-        background-color: lime;
+
+    nav {
+        height: 2rem;
+        background-color: #242424;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        padding: .3rem .5rem;
+        gap: 1rem;
+        img{
+            height: 100%;
+        }
     }
-    main{
-        height: calc(100% - 1.5rem);
-    }
-    main{
-        .soundboard{
+
+    main {
+        height: calc(100% - 2rem);
+
+        .soundboard {
             height: 100%;
             display: grid;
-            grid-template-rows: 1fr 5fr ;
+            grid-template-rows: 1fr 5fr;
             background-color: $mindspeak-lightblue;
-            .topbar{
+
+            .topbar {
                 display: grid;
                 grid-template-columns: 1fr 3fr 1fr 1fr;
                 background-color: $mindspeak-blue;
                 padding: .5rem;
                 gap: 1rem;
-                div{
+                button, a, fieldset{
+                    border-radius: 1rem 1rem 1rem 1rem;
+                    border: 1px solid #DDD;
+                    box-shadow: 4px 6px 4px 0px rgba(0, 0, 0, 0.25);
+                    display: flex;
+                    flex-direction: column;
+                    img{
+                        order: -2;
+                    }
+                }
+                > div {
                     background-color: white;
                     border-radius: 1rem 1rem 1rem 1rem;
+                    box-shadow: 4px 6px 4px 0px rgba(0, 0, 0, 0.25);
                 }
             }
-            .middle{
+
+            .middle {
                 display: grid;
                 grid-template-columns: 1fr 5fr;
                 gap: 1rem;
                 padding-top: .5rem;
-                .nav-left{
+
+                .nav-left {
                     display: grid;
                     grid-template-columns: 1fr;
                     grid-template-rows: repeat(5, 1fr);
@@ -38,15 +61,22 @@ body{
                     padding-left: .5rem;
                     margin-left: -1.5rem;
                     padding-bottom: .5rem;
-                    button, a{
+
+                    button, a, fieldset{
                         border-radius: 0px 1rem 1rem 0px;
                         border: 1px solid #DDD;
                         box-shadow: 4px 6px 4px 0px rgba(0, 0, 0, 0.25);
+                        &.active{
+                            background-color: $mindspeak-lightpink;
+                            border: 0.4rem solid $mindspeak-pink;
+                        }
                     }
                 }
-                .dynamic{
+
+                .dynamic {
                     display: grid;
                     grid-template-columns: repeat(5, 1fr);
+                    grid-template-rows: repeat(5, 1fr);
                     gap: 1rem;
                     padding-right: .5rem;
                     padding-bottom: .5rem;

@@ -2,39 +2,71 @@ document.addEventListener('DOMContentLoaded', () => {
     function clearTiles() {
         const tiles = document.querySelectorAll('.dy');
         tiles.forEach(tile => {
-            tile.innerText = ''; // Maak de inhoud leeg
-            tile.className = 'dy'; // Verwijder alle klassen
-            tile.removeAttribute('style'); // Verwijder inline styles zoals fontFamily en fontWeight
-            const newTile = tile.cloneNode(true); // Maak een schone kopie van het element
-            tile.replaceWith(newTile); // Vervang het oude element met de schone kopie om event listeners te verwijderen
+            tile.innerText = '';
+            tile.className = 'dy';
+            tile.removeAttribute('style');
+            const newTile = tile.cloneNode(true);
+            tile.replaceWith(newTile);
         });
     }
 
     function fillTiles(items) {
-        clearTiles(); // Maak eerst de tegels leeg
+        clearTiles();
 
         const tiles = document.querySelectorAll('.dy');
         items.forEach((item, index) => {
-            console.log("test", item, index);
             if (index < tiles.length) {
                 const tile = tiles[index];
-                console.log(tile)
                 tile.innerText = item.label;
-                tile.classList.add(item.className || 'item-button'); // Voeg een standaard of specifieke klasse toe
+                tile.classList.add(item.className || 'item-button');
                 tile.addEventListener('click', () => {
                     if (item.themeClass !== undefined) {
-                        document.body.className = ''; // Reset alle themaklassen
+                        document.body.className = '';
                         if (item.themeClass) {
-                            document.body.classList.add(item.themeClass); // Pas de gekozen themaklasse toe
+                            document.body.classList.add(item.themeClass);
                         }
+                        localStorage.setItem('selectedTheme', item.themeClass || '');
                     } else if (item.fontFamily) {
                         document.querySelectorAll('*').forEach(element => {
                             element.style.fontFamily = item.fontFamily;
                             element.style.fontWeight = item.fontWeight;
                         });
+                        localStorage.setItem('selectedFont', item.fontFamily);
+                        localStorage.setItem('selectedFontWeight', item.fontWeight);
+                    } else if (item.voiceName) {
+                        localStorage.setItem('selectedVoice', item.voiceName);
+                        speakLabel(item.label); // Spreek het label uit wanneer de stemknop wordt ingedrukt
+                    } else if (item.keyboardLayout) {
+                        localStorage.setItem('selectedKeyboardLayout', item.keyboardLayout);
                     }
                 });
             }
+        });
+    }
+
+    function speakLabel(text) {
+        fetch('http://localhost:3001/api/tts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ text: text, voice: localStorage.getItem('selectedVoice') || 'nova' })
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(`TTS request failed: ${text}`); });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('TTS response:', data);
+            const audioBlob = new Blob([Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0))], { type: 'audio/mpeg' });
+            const audioUrl = URL.createObjectURL(audioBlob);
+            const audio = new Audio(audioUrl);
+            audio.play();
+        })
+        .catch(error => {
+            console.error('Error during TTS request:', error);
         });
     }
 
@@ -46,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { label: 'Dark Mode', themeClass: 'theme-dark' }
         ];
 
-        fillTiles(colorThemes); // Vul de tegels met kleurenthema's
+        fillTiles(colorThemes);
     }
 
     function loadFonts() {
@@ -59,20 +91,77 @@ document.addEventListener('DOMContentLoaded', () => {
             { label: 'Comic Sans MS', fontFamily: '"Comic Sans MS", cursive', fontWeight: 'bold' }
         ];
 
-        fillTiles(fonts); // Vul de tegels met lettertypes
+        fillTiles(fonts);
     }
 
+    function loadVoices() {
+        const voices = [
+            { label: 'Alloy', voiceName: 'alloy' },
+            { label: 'Nova', voiceName: 'nova' },
+            { label: 'Shimmer', voiceName: 'shimmer' },
+            { label: 'Echo', voiceName: 'echo' },
+            { label: 'Onyx', voiceName: 'onyx' },
+            { label: 'Fable', voiceName: 'fable' }
+        ];
+
+        fillTiles(voices);
+    }
+
+    function loadKeyboardLayouts() {
+        const layouts = [
+            { label: 'QWERTY', keyboardLayout: 'qwerty' },
+            { label: 'AZERTY', keyboardLayout: 'azerty' },
+            { label: 'ABC', keyboardLayout: 'abc' }
+        ];
+
+        fillTiles(layouts);
+    }
+
+    // Event listeners voor knoppen
     const kleurenButton = document.getElementById('kleuren');
     if (kleurenButton) {
         kleurenButton.addEventListener('click', () => {
-            loadColorThemes(); // Laad de kleurenthema's wanneer er op de kleurenknop wordt gedrukt
+            loadColorThemes();
         });
     }
 
     const lettertypeButton = document.getElementById('lettertype');
     if (lettertypeButton) {
         lettertypeButton.addEventListener('click', () => {
-            loadFonts(); // Laad de lettertypes wanneer er op de lettertypeknop wordt gedrukt
+            loadFonts();
+        });
+    }
+
+    const stemButton = document.getElementById('av3');
+    if (stemButton) {
+        stemButton.addEventListener('click', () => {
+            loadVoices();
+        });
+    }
+
+    const toetsenbordButton = document.getElementById('toetsenbord');
+    if (toetsenbordButton) {
+        toetsenbordButton.addEventListener('click', () => {
+            loadKeyboardLayouts();
+        });
+    }
+
+    // Toepassen van opgeslagen instellingen bij het laden van de pagina
+    const storedTheme = localStorage.getItem('selectedTheme');
+    const storedFont = localStorage.getItem('selectedFont');
+    const storedFontWeight = localStorage.getItem('selectedFontWeight');
+
+    if (storedTheme !== null) {
+        document.body.className = '';
+        if (storedTheme) {
+            document.body.classList.add(storedTheme);
+        }
+    }
+
+    if (storedFont && storedFontWeight) {
+        document.querySelectorAll('*').forEach(element => {
+            element.style.fontFamily = storedFont;
+            element.style.fontWeight = storedFontWeight;
         });
     }
 });

@@ -6,6 +6,7 @@
 @import 'components/tiles';
 @import 'components/grid';
 @import 'components/output';
+@import 'components/popup';
 
 // Importing pages
 @import 'pages/account';
@@ -31,6 +32,10 @@ body {
     font-family: 'ITC Avant Garde Gothic', sans-serif;
     margin: 0;
     padding: 0;
+}
+a{
+    text-decoration: none;
+    color: inherit;
 }
 
 

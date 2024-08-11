@@ -16,8 +16,15 @@ app.use(cors({
 app.use(express.json());
 
 app.post('/api/tts', async (req, res) => {
-    const { text } = req.body;
+    let { text, voice } = req.body;
+
     console.log('Received text:', text);
+
+    // Fallback naar 'Nova' als er geen specifieke stem is opgegeven
+    voice = voice || 'Nova';
+
+    console.log('Using voice:', voice);
+
     try {
         const response = await fetch('https://api.openai.com/v1/audio/speech', {
             method: 'POST',
@@ -27,21 +34,25 @@ app.post('/api/tts', async (req, res) => {
             },
             body: JSON.stringify({
                 model: 'tts-1',
-                voice: 'nova', // Kies een beschikbare stem
+                voice: voice,
                 input: text,
             })
         });
 
-        const arrayBuffer = await response.arrayBuffer(); 
-        const audioBuffer = Buffer.from(arrayBuffer);
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
 
-        res.set('Content-Type', 'audio/mpeg');
-        res.send(audioBuffer);
+        const arrayBuffer = await response.arrayBuffer(); // Lees de respons als een ArrayBuffer
+        const audioContent = Buffer.from(arrayBuffer).toString('base64'); // Converteer naar base64
+
+        res.json({ audioContent, mimeType: 'audio/mpeg' }); // Voeg expliciet mimeType toe voor debugging
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 app.listen(port, () => {
     console.log(`TTS Server running on http://localhost:${port}`);

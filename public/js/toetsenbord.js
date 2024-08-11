@@ -2,11 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const keyboardLayout = {
         qwerty: ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M'],
         azerty: ['A', 'Z', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'Q', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'W', 'X', 'C', 'V', 'B', 'N'],
-        // Voeg meer indelingen toe zoals nodig
+        abc: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
     };
 
     let currentPage = 0; // Huidige pagina
     const itemsPerPage = 24; // Maximaal 24 toetsen per pagina (laat ruimte voor "Volgende" knop)
+
+    const selectedLayout = localStorage.getItem('selectedKeyboardLayout') || 'qwerty'; // Haal de gekozen layout op, standaard naar qwerty
 
     function generateKeyboard(layout, page) {
         const keyboardDiv = document.getElementById('keyboard');
@@ -83,8 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             keyboardDiv.insertBefore(backTile, keyboardDiv.firstChild);
         }
     }
-    if (window.location.pathname === '/toetsenbord/'){
-        generateKeyboard(keyboardLayout.qwerty, currentPage);
-      }
-    // Genereer het toetsenbord op basis van de gekozen indeling en pagina
+    if(window.location.pathname === '/toetsenbord.html') {  
+        generateKeyboard(keyboardLayout[selectedLayout], currentPage); // Gebruik de gekozen layout
+    }
 });

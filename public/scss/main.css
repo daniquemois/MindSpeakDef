@@ -54,32 +54,39 @@
 button, a {
   background-color: white;
   border: 0.4rem solid transparent;
-  font-size: 0.8rem;
+  font-size: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 1rem 1rem 1rem 1rem;
+  flex-direction: column;
+  box-shadow: 4px 6px 4px 0px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  position: relative;
+}
+button img, a img {
+  max-height: 4rem;
 }
 button.werkwoord, a.werkwoord {
   border-color: var(--verbs);
 }
 button.werkwoord#categorie, a.werkwoord#categorie {
   background-color: var(--verbs);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #78AF61, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #62924E, 0 -20px 1px -9px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #78AF61, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #62924E, 0 -20px 1px -9px rgba(0, 0, 0, 0.15), 4px 6px 4px 0px rgba(0, 0, 0, 0.25);
 }
 button.zelfstandig_naamwoord, a.zelfstandig_naamwoord {
   border-color: var(--nouns);
 }
 button.zelfstandig_naamwoord#categorie, a.zelfstandig_naamwoord#categorie {
   background-color: var(--nouns);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #DD9B37, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #B37D2C, 0 -20px 1px -9px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #DD9B37, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #B37D2C, 0 -20px 1px -9px rgba(0, 0, 0, 0.15), 4px 6px 4px 0px rgba(0, 0, 0, 0.25);
 }
 button.persoonlijk_voornaamwoord, a.persoonlijk_voornaamwoord {
   border-color: var(--pronouns);
 }
 button.persoonlijk_voornaamwoord#categorie, a.persoonlijk_voornaamwoord#categorie {
   background-color: var(--pronouns);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #D0BB67, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #9E8E4E, 0 -20px 1px -9px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #D0BB67, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #9E8E4E, 0 -20px 1px -9px rgba(0, 0, 0, 0.15), 4px 6px 4px 0px rgba(0, 0, 0, 0.25);
 }
 button.belangrijk, a.belangrijk {
   border-color: var(--negations);
@@ -92,7 +99,7 @@ button.vraagwoord, a.vraagwoord {
 }
 button.vraagwoord#categorie, a.vraagwoord#categorie {
   background-color: var(--questions);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #926CC2, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #705297, 0 -20px 1px -9px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #926CC2, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #705297, 0 -20px 1px -9px rgba(0, 0, 0, 0.15), 4px 6px 4px 0px rgba(0, 0, 0, 0.25);
 }
 button.voornaamwoord, a.voornaamwoord {
   border-color: var(--determiners);
@@ -102,9 +109,13 @@ button.voornaamwoord#categorie, a.voornaamwoord#categorie {
 }
 button.ja, a.ja {
   border-color: var(--verbs);
+  background-color: var(--verbs);
+  font-size: 2rem;
 }
 button.nee, a.nee {
   border-color: var(--negations);
+  background-color: var(--negations);
+  font-size: 2rem;
 }
 button#categorie, a#categorie {
   align-self: flex-end;
@@ -120,16 +131,61 @@ button#categorie, a#categorie {
   z-index: 1;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #D1D1D1, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #A5A5A5, 0 -20px 1px -9px rgba(0, 0, 0, 0.15);
 }
+button.ai, a.ai {
+  border-style: dashed;
+}
+
+fieldset {
+  box-sizing: border-box;
+  position: relative;
+  padding: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  font-size: 0.8rem;
+  border-radius: 0px 1rem 1rem 0px;
+  border: 1px solid #DDD;
+  box-shadow: 4px 6px 4px 0px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+fieldset input {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  aspect-ratio: unset;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  border: none;
+}
+fieldset label {
+  z-index: 3;
+  font-size: 1rem;
+}
+
+#aiToggle:checked {
+  background-color: #FFD4D4;
+}
 
 body {
   height: 100vh;
 }
 body nav {
-  height: 1.5rem;
-  background-color: lime;
+  height: 2rem;
+  background-color: #242424;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 0.3rem 0.5rem;
+  gap: 1rem;
+}
+body nav img {
+  height: 100%;
 }
 body main {
-  height: calc(100% - 1.5rem);
+  height: calc(100% - 2rem);
 }
 body main .soundboard {
   height: 100%;
@@ -144,9 +200,20 @@ body main .soundboard .topbar {
   padding: 0.5rem;
   gap: 1rem;
 }
-body main .soundboard .topbar div {
+body main .soundboard .topbar button, body main .soundboard .topbar a, body main .soundboard .topbar fieldset {
+  border-radius: 1rem 1rem 1rem 1rem;
+  border: 1px solid #DDD;
+  box-shadow: 4px 6px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+body main .soundboard .topbar button img, body main .soundboard .topbar a img, body main .soundboard .topbar fieldset img {
+  order: -2;
+}
+body main .soundboard .topbar > div {
   background-color: white;
   border-radius: 1rem 1rem 1rem 1rem;
+  box-shadow: 4px 6px 4px 0px rgba(0, 0, 0, 0.25);
 }
 body main .soundboard .middle {
   display: grid;
@@ -164,14 +231,19 @@ body main .soundboard .middle .nav-left {
   margin-left: -1.5rem;
   padding-bottom: 0.5rem;
 }
-body main .soundboard .middle .nav-left button, body main .soundboard .middle .nav-left a {
+body main .soundboard .middle .nav-left button, body main .soundboard .middle .nav-left a, body main .soundboard .middle .nav-left fieldset {
   border-radius: 0px 1rem 1rem 0px;
   border: 1px solid #DDD;
   box-shadow: 4px 6px 4px 0px rgba(0, 0, 0, 0.25);
 }
+body main .soundboard .middle .nav-left button.active, body main .soundboard .middle .nav-left a.active, body main .soundboard .middle .nav-left fieldset.active {
+  background-color: #FFD4D4;
+  border: 0.4rem solid #FF9E9E;
+}
 body main .soundboard .middle .dynamic {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
   gap: 1rem;
   padding-right: 0.5rem;
   padding-bottom: 0.5rem;
@@ -191,6 +263,47 @@ body main .soundboard .middle .dynamic {
 }
 #output::-webkit-scrollbar {
   display: none;
+}
+
+.edit-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+.edit-popup.active {
+  display: block;
+}
+
+.edit-button {
+  display: none; /* Verberg de bewerkingsknoppen standaard */
+  position: absolute;
+  top: -0.7rem;
+  right: -0.7rem;
+  background-color: #FFD4D4;
+  border: 0.3rem solid #FF9E9E;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  text-align: center;
+  line-height: 22px;
+  cursor: pointer;
+  z-index: 10;
+  font-size: 1.4rem;
+}
+
+.edit-mode .edit-button {
+  display: flex; /* Toon de bewerkingsknoppen alleen in de bewerkingsmodus */
+  justify-content: center;
+  align-items: center;
+  padding: unset;
+  color: #FF9E9E;
+  background-image: url("../images/plusteken.svg");
 }
 
 #account .center {
@@ -274,4 +387,9 @@ body {
   font-family: "ITC Avant Garde Gothic", sans-serif;
   margin: 0;
   padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }/*# sourceMappingURL=main.css.map */
