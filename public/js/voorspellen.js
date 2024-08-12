@@ -3,18 +3,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const outputContainer = document.getElementById('output');
   
     const handleNewWord = async () => {
-      const woorden = outputContainer.textContent.trim().split(/\s+/);
-      const lastWord = woorden[woorden.length - 1];
-      console.log('Laatste woord:', lastWord);
+
+        // Haal de innerText van elk child-element van de output container op en voeg deze samen tot een enkele string
+        const woorden = Array.from(outputContainer.children).map(child => child.innerText.trim());
+        const zin = woorden.join(' ');
+        const lastWord = woorden[woorden.length - 1]; // Pak het laatste woord
+        console.log('Laatste woord:', lastWord);
+        console.log('Zin:', zin);
   
-      if (aiToggle.checked && lastWord) {
+      if (aiToggle.checked && lastWord && zin) {
         try {
           const response = await fetch('/api/suggestions', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ prompt: lastWord })
+            body: JSON.stringify({ prompt: zin })
           });
   
           if (!response.ok) {

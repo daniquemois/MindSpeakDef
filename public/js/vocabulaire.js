@@ -99,6 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
         zinsbalkLeegButton.addEventListener('click', () => {
             if (outputDiv) {
                 outputDiv.innerHTML = ''; // Leeg de hele inhoud van de output div
+
+                // remove cookie
+                document.cookie = 'zin=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
             }
         });
     }

@@ -73,14 +73,42 @@ button, a{
             4px 6px 4px 0px rgba(0, 0, 0, 0.25);
         }
     }
-
+    &.voegwoord {
+        border-color: var(--conjunctions);
+        &#categorie {
+            background-color: var(--conjunctions);
+        }
+    }
+    &.bijwoord {
+        border-color: var(--adverbs);
+        &#categorie {
+            background-color: var(--adverbs);
+        }
+    }
+    &.bijvoeglijk_naamwoord {
+        border-color: var(--adjectives);
+        &#categorie {
+            background-color: var(--adjectives);
+        }
+    }
     &.voornaamwoord {
         border-color: var(--determiners);
         &#categorie {
             background-color: var(--determiners);
         }
     }
-
+    &.voegwoord {
+        border-color: var(--prepositions);
+        &#categorie {
+            background-color: var(--prepositions);
+        }
+    }
+    &.voorzetsel {
+        border-color: var(--prepositions);
+        &#categorie {
+            background-color: var(--prepositions);
+        }
+    }
     &.ja {
         border-color: var(--verbs);
         background-color: var(--verbs);

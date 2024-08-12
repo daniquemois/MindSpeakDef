@@ -200,40 +200,40 @@ app.post('/api/suggestions', async (req, res) => {
   }
 });
 
-// app.post('/api/check-grammar', async (req, res) => {
-//   const { text } = req.body;
-//   console.log('Received text for grammar check:', text);
+app.post('/api/check-grammar', async (req, res) => {
+  const { text } = req.body;
+  console.log('Received text for grammar check:', text);
 
-//   try {
-//     const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
-//       },
-//       body: JSON.stringify({
-//         model: 'gpt-4',
-//         messages: [
-//           { role: 'system', content: 'Je bent een grammatica controle assistent. Corrigeer de volgende zin als dat nodig is, en pas het aan. Doe anders niks. Hij hoeft niet volledig te zijn. Dit is het enige wat je hoeft te doen.' },
-//           { role: 'user', content: text }
-//         ],
-//         max_tokens: 100,
-//         n: 1,
-//         stop: ["\n"]
-//       })
-//     });
+  try {
+    const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-4',
+        messages: [
+          { role: 'system', content: 'Je bent een grammatica controle assistent. Corrigeer de volgende zin als dat nodig is, en pas het aan. Doe anders niks. Hij hoeft niet volledig te zijn. Dit is het enige wat je hoeft te doen.' },
+          { role: 'user', content: text }
+        ],
+        max_tokens: 100,
+        n: 1,
+        stop: ["\n"]
+      })
+    });
 
-//     const aiData = await aiResponse.json();
-//     const correctedText = aiData.choices[0].message.content.trim();
+    const aiData = await aiResponse.json();
+    const correctedText = aiData.choices[0].message.content.trim();
 
-//     console.log('Gecorrigeerde tekst:', correctedText);
-//     res.json({ correctedText });
+    console.log('Gecorrigeerde tekst:', correctedText);
+    res.json({ correctedText });
 
-//   } catch (error) {
-//     console.error('Error checking grammar:', error);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// });
+  } catch (error) {
+    console.error('Error checking grammar:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 // Start de server
 app.listen(PORT, () => {
