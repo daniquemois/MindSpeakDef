@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadColorThemes() {
         const colorThemes = [
-            { label: 'Default', themeClass: '' },
+            { label: 'Standaard', themeClass: '' },
             { label: 'Pastel', themeClass: 'theme-pastel' },
             { label: 'High Contrast', themeClass: 'theme-contrast' },
             { label: 'Dark Mode', themeClass: 'theme-dark' }
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadFonts() {
         const fonts = [
-            { label: 'Default', fontFamily: 'ITC Avant Garde Gothic, sans-serif', fontWeight: 'normal' },
+            { label: 'Standaard', fontFamily: 'ITC Avant Garde Gothic, sans-serif', fontWeight: 'normal' },
             { label: 'Arial', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' },
             { label: 'Times New Roman', fontFamily: '"Times New Roman", serif', fontWeight: 'bold' },
             { label: 'Courier New', fontFamily: '"Courier New", monospace', fontWeight: 'bold' },
@@ -96,12 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadVoices() {
         const voices = [
-            { label: 'Alloy', voiceName: 'alloy' },
-            { label: 'Nova', voiceName: 'nova' },
-            { label: 'Shimmer', voiceName: 'shimmer' },
+            { label: 'Zilver', voiceName: 'alloy' },
+            { label: 'Ster', voiceName: 'nova' },
+            { label: 'Glitter', voiceName: 'shimmer' },
             { label: 'Echo', voiceName: 'echo' },
-            { label: 'Onyx', voiceName: 'onyx' },
-            { label: 'Fable', voiceName: 'fable' }
+            { label: 'Kristal', voiceName: 'onyx' },
+            { label: 'Sprookje', voiceName: 'fable' }
         ];
 
         fillTiles(voices);

@@ -1,15 +1,15 @@
 let currentPage = 0;
-const itemsPerPage = 23; // Aantal items per pagina exclusief vaste items
+const itemsPerPage = 23; // Number of items per page excluding fixed items
 
-// Functie om de categorie dynamisch te identificeren
+// Function to dynamically identify the category from the URL
 function getCategoryFromURL() {
     const path = window.location.pathname;
     const parts = path.split('/');
     const category = parts[parts.length - 1].replace('.html', '');
-    return category; // Geeft de naam van de categorie terug, bijvoorbeeld "mensen"
+    return category; // Returns the category name, e.g., "mensen"
 }
 
-// Controleer of de pagina geen "toetsenbord" of "account" in de URL bevat
+// Check if the page does not contain "toetsenbord" or "account" in the URL
 function shouldRunScript() {
     const path = window.location.pathname.toLowerCase();
     return !path.includes('toetsenbord') && !path.includes('account');
@@ -20,12 +20,12 @@ if (shouldRunScript()) {
         try {
             const response = await fetch('/api/data');
             const data = await response.json();
-            console.log('Fetched data:', data); // Log fetched data voor debugging
+            console.log('Fetched data:', data); // Log fetched data for debugging
 
             const category = getCategoryFromURL();
-            console.log('Category:', category); // Log de gedetecteerde categorie
+            console.log('Category:', category); // Log the detected category
 
-            // Verwerk de data voor de dynamisch gedetecteerde categorie
+            // Process the data for the dynamically detected category
             processData(data, category);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -36,20 +36,20 @@ if (shouldRunScript()) {
         const filteredWords = [];
         let specialTile5Word = null;
         let specialTile10Word = null;
-    
-        // Zoek naar woorden met de dynamisch gedetecteerde categorie
+
+        // Search for words with the dynamically detected category
         for (let row of data) {
-            if (row.length > 3) { // Controleer of de rij minstens 4 kolommen heeft
-                const categories = row[3].split(',').map(category => category.trim()); // Verdeel de categorieën en verwijder eventuele spaties
-    
+            if (row.length > 3) { // Check if the row has at least 4 columns
+                const categories = row[3].split(',').map(category => category.trim()); // Split the categories and remove any spaces
+
                 const wordData = {
                     word: row[0],
-                    wordType: row[1], // Veronderstel dat de woordsoort in de tweede kolom zit
-                    imageUrl: row[5] ? `/images/${row[5]}` : null, // Veronderstel dat de afbeelding in de zesde kolom zit (F)
-                    isCategory: row[4] && row[4].toLowerCase() === 'ja', // Controleer of de kolom bestaat en 'ja' bevat
+                    wordType: row[1], // Assume the word type is in the second column
+                    imageUrl: row[5] ? `/images/${row[5]}` : null, // Assume the image is in the sixth column (F)
+                    isCategory: row[4] && row[4].toLowerCase() === 'ja', // Check if the column exists and contains 'ja'
                     link: row[6]
                 };
-    
+
                 if (row[0] === "Alle thema's") {
                     specialTile5Word = wordData;
                 } else if (row[0] === "Persoonlijk") {
@@ -59,171 +59,96 @@ if (shouldRunScript()) {
                 }
             }
         }
-    
-        // Sorteer de woorden: eerst categorieën, dan alfabetisch binnen die groepen
+
+        // Sort the words: first categories, then alphabetically within those groups
         filteredWords.sort((a, b) => {
             if (a.isCategory && !b.isCategory) {
-                return -1; // a komt vóór b
+                return -1; // a comes before b
             } else if (!a.isCategory && b.isCategory) {
-                return 1; // b komt vóór a
+                return 1; // b comes before a
             } else {
-                return a.word.localeCompare(b.word); // Sorteer alfabetisch
+                return a.word.localeCompare(b.word); // Sort alphabetically
             }
         });
-    
+
         renderPage(filteredWords, currentPage, specialTile5Word, specialTile10Word);
     }
-    
+
     function renderPage(words, page, specialTile5Word, specialTile10Word) {
-        const tiles = document.querySelectorAll('.dynamic a'); // Selecteer alle knoppen in de .dynamic sectie
+        const tiles = document.querySelectorAll('.dynamic a'); // Select all buttons in the .dynamic section
         
         console.log('Tiles found:', tiles.length);
         console.log('Words to display:', words.length);
-    
+
         const startIndex = page * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, words.length);
-        
+
+        // Clear and reset the tiles
         tiles.forEach(tile => {
             tile.innerText = '';
             tile.className = ''; // Reset classes
-            tile.id = ''; // Reset ID indien nodig
-            tile.removeAttribute('href'); // Verwijder href als het geen link heeft
-            tile.innerHTML = ''; // Maak de inhoud leeg voor nieuwe elementen zoals afbeeldingen
-            tile.onclick = null; // Verwijder eerdere event listeners
+            tile.id = ''; // Reset ID if needed
+            tile.removeAttribute('href'); // Remove href if it's not a link
+            tile.innerHTML = ''; // Clear the content for new elements like images
+            tile.onclick = null; // Remove previous event listeners
         });
-    
+
         let tileIndex = 0;
         let wordIndex = startIndex;
-    
+
         while (wordIndex < endIndex && tileIndex < tiles.length) {
-            if (tileIndex === 4 || tileIndex === 9) {
-                // Sla tegel 5 en 10 over voor de standaard items
+            // Handle special tiles (5 and 10)
+            if (tileIndex === 4 && specialTile5Word) {
+                setTileContent(tiles[4], specialTile5Word);
                 tileIndex++;
+                continue; // Skip to the next tile
+            } else if (tileIndex === 9 && specialTile10Word) {
+                setTileContent(tiles[9], specialTile10Word);
+                tileIndex++;
+                continue; // Skip to the next tile
             }
-    
+
+            // Skip over the "Volgende" and "Terug" buttons
+            if ((tileIndex === tiles.length - 1 && endIndex < words.length) || (tileIndex === 0 && page > 0)) {
+                tileIndex++;
+                continue; // Skip to the next tile
+            }
+
             const tile = tiles[tileIndex];
             
             if (!tile) {
                 console.error(`No tile found for index ${tileIndex}.`);
                 continue;
             }
-    
+
             const word = words[wordIndex];
             console.log(`Assigning word "${word.word}" to tile index ${tileIndex}`);
-    
-            // Voeg de afbeelding toe als er een is
-            if (word.imageUrl) {
-                const imgElement = document.createElement('img');
-                imgElement.src = word.imageUrl;
-                imgElement.alt = word.word;
-                imgElement.classList.add('tile-image'); // Voeg een CSS-klasse toe voor styling
-                tile.appendChild(imgElement);
-            }
-    
-            // Voeg de tekst toe
-            const textElement = document.createElement('span');
-            textElement.innerText = word.word;
-            tile.appendChild(textElement);
-    
-            if (word.wordType) {
-                tile.classList.add(word.wordType);
-            }
-    
-            if (word.isCategory) {
-                tile.id = 'categorie';
-                if (word.link) {
-                    // Controleer en pas de link aan om onbedoelde toevoegingen te voorkomen
-                    tile.href = `${word.link.startsWith('/') ? word.link : '/' + word.link}`;
-                    tile.style.cursor = 'pointer';
-                }
-            } else {
-                tile.id = ''; // Reset ID als het geen categorie is
-            
-                // Voeg een event listener toe voor niet-categorie tegels
-                tile.addEventListener('click', (event) => {
-                    event.preventDefault(); // Voorkom standaard linkgedrag
-            
-                    const outputDiv = document.getElementById('output');
-                    if (outputDiv) {
-                        const newDiv = document.createElement('div');
-                        newDiv.innerText = tile.innerText; // Zet de inhoud van de tegel in de nieuwe div
-                        outputDiv.appendChild(newDiv); // Voeg de nieuwe div toe aan de output div
-                        outputDiv.scrollLeft = outputDiv.scrollWidth; // Scroll automatisch naar het einde
-                    } else {
-                        console.error('Output div not found.');
-                    }
-                });
-            }
-            
-    
+
+            setTileContent(tile, word);
+
             tileIndex++;
             wordIndex++;
         }
-    
-        // Zet het specifieke woord op tegel 5 (index 4)
-        const tile5 = tiles[4];
-        if (tile5 && specialTile5Word) {
-            tile5.innerText = specialTile5Word.word;
-            tile5.className = '';
-            tile5.classList.add('custom-class-theme');
-            tile5.id = 'categorie';
-            if (specialTile5Word.imageUrl) {
-                const imgElement = document.createElement('img');
-                imgElement.src = specialTile5Word.imageUrl;
-                imgElement.alt = specialTile5Word.word;
-                imgElement.classList.add('tile-image');
-                tile5.appendChild(imgElement);
-            }
-            if (specialTile5Word.link) {
-                tile5.href = specialTile5Word.link;
-                tile5.style.cursor = 'pointer';
-            }
-        }
-    
-        // Zet het specifieke woord op tegel 10 (index 9)
-        const tile10 = tiles[9];
-        if (tile10 && specialTile10Word) {
-            tile10.innerText = specialTile10Word.word;
-            tile10.className = '';
-            tile10.classList.add('custom-class-personal');
-            tile10.id = 'categorie';
-            if (specialTile10Word.imageUrl) {
-                const imgElement = document.createElement('img');
-                imgElement.src = specialTile10Word.imageUrl;
-                imgElement.alt = specialTile10Word.word;
-                imgElement.classList.add('tile-image');
-                tile10.appendChild(imgElement);
-            }
-            if (specialTile10Word.link) {
-                tile10.href = specialTile10Word.link;
-                tile10.style.cursor = 'pointer';
-            }
-        }
-    
-        // Voeg een "Volgende" knop toe als er meer woorden zijn
-        if (endIndex < words.length) {
-            const nextTile = tiles[tiles.length - 1];
-            if (nextTile) {
-                nextTile.innerText = "Volgende";
-                nextTile.className = '';
-                nextTile.classList.add('pagination-next');
-                nextTile.onclick = () => {
-                    currentPage++;
-                    renderPage(words, currentPage, specialTile5Word, specialTile10Word);
-                };
-            } else {
-                console.error('Next tile not found.');
-            }
-        }
-    
-        // Voeg een "Terug" knop toe op tegel 1 als we niet op de eerste pagina zijn
+
+        // Add a "Terug" button if we're not on the first page
         if (page > 0) {
             const backTile = tiles[0];
             if (backTile) {
-                backTile.innerText = "Terug";
+                backTile.innerHTML = ''; // Clear any existing content
+                const imgElement = document.createElement('img');
+                imgElement.src = '/images/terug.svg'; // Path to your back icon image
+                imgElement.alt = "Terug";
+                imgElement.classList.add('nav-image');
+                backTile.appendChild(imgElement);
+
+                const textElement = document.createElement('span');
+                textElement.innerText = "Terug";
+                backTile.appendChild(textElement);
+
                 backTile.className = '';
                 backTile.classList.add('pagination-back');
-                backTile.onclick = () => {
+                backTile.onclick = (event) => {
+                    event.preventDefault(); // Prevent default link behavior
                     currentPage--;
                     renderPage(words, currentPage, specialTile5Word, specialTile10Word);
                 };
@@ -231,8 +156,80 @@ if (shouldRunScript()) {
                 console.error('Back tile not found.');
             }
         }
+
+        // Add a "Volgende" button if there are more words
+        if (endIndex < words.length) {
+            const nextTile = tiles[tiles.length - 1];
+            if (nextTile) {
+                nextTile.innerHTML = ''; // Clear any existing content
+                const imgElement = document.createElement('img');
+                imgElement.src = '/images/volgende.svg'; // Path to your next icon image
+                imgElement.alt = "Volgende";
+                imgElement.classList.add('nav-image');
+                nextTile.appendChild(imgElement);
+
+                const textElement = document.createElement('span');
+                textElement.innerText = "Volgende";
+                nextTile.appendChild(textElement);
+
+                nextTile.className = '';
+                nextTile.classList.add('pagination-next');
+                nextTile.onclick = (event) => {
+                    event.preventDefault(); // Prevent default link behavior
+                    currentPage++;
+                    renderPage(words, currentPage, specialTile5Word, specialTile10Word);
+                };
+            } else {
+                console.error('Next tile not found.');
+            }
+        }
     }
-    
-    // Roep fetchData aan wanneer de pagina geladen is
+
+    // Helper function to set the content of a tile
+    function setTileContent(tile, word) {
+        if (word.imageUrl) {
+            const imgElement = document.createElement('img');
+            imgElement.src = word.imageUrl;
+            imgElement.alt = word.word;
+            imgElement.classList.add('tile-image'); // Add a CSS class for styling
+            tile.appendChild(imgElement);
+        }
+
+        const textElement = document.createElement('span');
+        textElement.innerText = word.word;
+        tile.appendChild(textElement);
+
+        if (word.wordType) {
+            tile.classList.add(word.wordType);
+        }
+
+        if (word.isCategory) {
+            tile.id = 'categorie';
+            if (word.link) {
+                const cleanLink = word.link.startsWith('/') ? word.link : `/${word.link}`;
+                tile.href = cleanLink;
+                tile.style.cursor = 'pointer';
+            }
+        } else {
+            tile.id = ''; // Reset ID if it's not a category
+        
+            // Add an event listener for non-category tiles
+            tile.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent default link behavior
+        
+                const outputDiv = document.getElementById('output');
+                if (outputDiv) {
+                    const newDiv = document.createElement('div');
+                    newDiv.innerText = tile.innerText; // Put the content of the tile in the new div
+                    outputDiv.appendChild(newDiv); // Add the new div to the output div
+                    outputDiv.scrollLeft = outputDiv.scrollWidth; // Scroll automatically to the end
+                } else {
+                    console.error('Output div not found.');
+                }
+            });
+        }
+    }
+
+    // Call fetchData when the page loads
     window.onload = fetchData;
 }

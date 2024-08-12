@@ -5,6 +5,7 @@ import './account.js';
 import './voorspellen.js';
 import './nav.js';
 import './edit.js';
+import './fallback.js';
 
 async function fetchData() {
     try {
