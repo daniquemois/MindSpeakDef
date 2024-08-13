@@ -1,5 +1,3 @@
-Natuurlijk! Hieronder is een voorbeeld van een README.md bestand voor je project.
-
 ```markdown
 # MindSpeak Project
 
@@ -86,19 +84,9 @@ mindspeak/
 ### OpenAI API
 - Gebruikt voor de voorspellingsfunctie en grammatica controle.
 
-## Contributie
-
-1. Fork de repository.
-2. Maak een nieuwe branch (`git checkout -b feature/nieuwe-feature`).
-3. Commit je wijzigingen (`git commit -am 'Voeg nieuwe feature toe'`).
-4. Push naar de branch (`git push origin feature/nieuwe-feature`).
-5. Maak een Pull Request.
-
 ## Licentie
 Dit project is gelicenseerd onder de MIT-licentie.
 
 ## Contact
-Voor vragen of ondersteuning, neem contact op via [email@example.com](mailto:email@example.com).
+Voor vragen of ondersteuning, neem contact op via [daniquelammertink@gmail.com](mailto:daniquelammertink@gmail.com).
 ```
-
-Dit voorbeeld kan aangepast worden afhankelijk van de specifieke details van je project. Voeg zeker extra secties toe zoals "Bekende Problemen" of "Toekomstige Functies" als dat relevant is.
