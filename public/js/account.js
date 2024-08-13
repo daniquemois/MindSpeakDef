@@ -1,4 +1,17 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // Haal de configuratie op van de server
+    let config;
+    try {
+        const response = await fetch('/api/config');
+        config = await response.json();
+    } catch (error) {
+        console.error('Error fetching configuration:', error);
+        alert('Kon de configuratie niet ophalen. Controleer de serverinstellingen.');
+        return;
+    }
+
+    const apiUrl = config.API_URL;
+
     function clearTiles() {
         const tiles = document.querySelectorAll('.dy');
         tiles.forEach(tile => {
@@ -45,29 +58,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function speakLabel(text) {
-        fetch('http://localhost:3001/api/tts', {
+        fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ text: text, voice: localStorage.getItem('selectedVoice') || 'nova' })
         })
-        .then(response => {
-            if (!response.ok) {
-                return response.text().then(text => { throw new Error(`TTS request failed: ${text}`); });
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('TTS response:', data);
-            const audioBlob = new Blob([Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0))], { type: 'audio/mpeg' });
-            const audioUrl = URL.createObjectURL(audioBlob);
-            const audio = new Audio(audioUrl);
-            audio.play();
-        })
-        .catch(error => {
-            console.error('Error during TTS request:', error);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(`TTS request failed: ${text}`); });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('TTS response:', data);
+                const audioBlob = new Blob([Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0))], { type: 'audio/mpeg' });
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const audio = new Audio(audioUrl);
+                audio.play();
+            })
+            .catch(error => {
+                console.error('Error during TTS request:', error);
+            });
     }
 
     function loadColorThemes() {

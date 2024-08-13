@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Controleer of de huidige pagina mijnklas.html of lievelingseten.html is
     const currentPage = window.location.pathname.split('/').pop().replace('.html', '');
-    const allowedPages = ['mijnklas', 'lievelingseten'];
+    const allowedPages = ['mijnklas', 'lievelingseten', 'vrienden', 'familienamen'];
     if (!allowedPages.includes(currentPage)) {
         return; // Als de pagina niet overeenkomt, voer de code niet uit
     }

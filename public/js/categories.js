@@ -12,7 +12,7 @@ function getCategoryFromURL() {
 // Check if the page does not contain "toetsenbord" or "account" in the URL
 function shouldRunScript() {
     const path = window.location.pathname.toLowerCase();
-    return !path.includes('toetsenbord') && !path.includes('account') && !path.includes('mijnklas');
+    return !path.includes('toetsenbord') && !path.includes('account') && !path.includes('mijnklas') && !path.includes('lievelingseten') && !path.includes('vrienden') && !path.includes('familienamen');
 }
 
 if (shouldRunScript()) {
