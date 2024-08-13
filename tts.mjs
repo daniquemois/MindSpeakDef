@@ -7,7 +7,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.TTS_PORT || 3001;
-const host = process.env.HOST || 'localhost';
+const host = process.env.HOST || '0.0.0.0'; // Luister op alle netwerkinterfaces
 
 // Gebruik CORS om verzoeken van andere domeinen toe te staan
 app.use(cors({

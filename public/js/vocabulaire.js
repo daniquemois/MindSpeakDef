@@ -1,9 +1,22 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const spreekButton = document.getElementById('spreek');
     const outputDiv = document.getElementById('output');
     const ttsAudio = document.createElement('audio'); // Maak een audio-element aan
 
     let selectedVoice = localStorage.getItem('selectedVoice') || 'nova'; // Haal de geselecteerde stem op, of gebruik 'nova' als standaard
+
+    // Haal de configuratie op van de server
+    let config;
+    try {
+        const response = await fetch('/api/config');
+        config = await response.json();
+    } catch (error) {
+        console.error('Error fetching configuration:', error);
+        alert('Kon de configuratie niet ophalen. Controleer de serverinstellingen.');
+        return;
+    }
+
+    const apiUrl = config.API_URL;
 
     // Helper functie om base64 naar een Blob om te zetten
     function base64ToBlob(base64, mimeType) {
@@ -22,15 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
             byteArrays.push(byteArray);
         }
 
-        return new Blob(byteArrays, {
-            type: mimeType
-        });
+        return new Blob(byteArrays, { type: mimeType });
     }
 
     // Functie om tekst uit te spreken
     async function speakText(text, voice) {
         try {
-            const response = await fetch('http://localhost:3001/api/tts', {
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -43,17 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (response.ok) {
-                const {
-                    audioContent,
-                    mimeType
-                } = await response.json(); // Ontvang de audio en mimeType
+                const { audioContent, mimeType } = await response.json(); // Ontvang de audio en mimeType
                 console.log('Received MIME type:', mimeType); // Controleer het MIME-type
 
                 const audioBlob = base64ToBlob(audioContent, mimeType); // Converteer de base64-string naar een Blob
                 const audioUrl = URL.createObjectURL(audioBlob); // Maak een URL voor de ontvangen audio
 
-                ttsAudio.src = ''; // Reset de bron
-                ttsAudio.src = audioUrl;
+                ttsAudio.src = audioUrl; // Stel de audio bron in
 
                 ttsAudio.addEventListener('error', function (e) {
                     console.error('Audio error:', e);
@@ -103,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Event listener voor de zinsbalk leeg-knop
-    // Event listener voor de zinsbalk leeg-knop
     const zinsbalkLeegButton = document.getElementById('zinsbalkleeg');
     if (zinsbalkLeegButton) {
         zinsbalkLeegButton.addEventListener('click', () => {
@@ -113,5 +119,4 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
 });

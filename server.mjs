@@ -3,23 +3,31 @@ import { google } from 'googleapis';
 import path from 'path';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
-import NodeCache from 'node-cache'; // Voeg NodeCache import toe
+import NodeCache from 'node-cache';
 
 dotenv.config();
 
 // Maak de express-app
 const app = express();
 const PORT = process.env.PORT || 3000;
-const HOST = process.env.HOST || 'localhost';
+const HOST = process.env.HOST || '0.0.0.0';
+const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:3000';
 
 // Setup cache
-const cache = new NodeCache({ stdTTL: 600 }); // Cache items voor 10 minuten
+const cache = new NodeCache({ stdTTL: 600 });
 
 // Zorg dat express JSON kan parsen
 app.use(express.json());
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(path.resolve(), 'public')));
+
+// Route to serve configuration variables
+app.get('/api/config', (req, res) => {
+  res.json({
+    API_URL: process.env.TTS_API_URL || `http://${HOST}:${process.env.TTS_PORT || 3001}/api/tts`
+  });
+});
 
 // Google Sheets API setup
 const sheets = google.sheets('v4');
