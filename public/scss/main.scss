@@ -7,14 +7,16 @@
 @import 'components/grid';
 @import 'components/output';
 @import 'components/popup';
+@import 'components/loader';
 
 // Importing pages
 @import 'pages/account';
+@import 'pages/toetsenbord';
 
 
 @font-face {
     font-family: 'ITC Avant Garde Gothic';
-    src: url('../fonts/ITCAvantGardeGothicBold.otf.otf') format('opentype');
+    src: url('../fonts/ITCAvantGardeGothicBold.otf') format('opentype');
 }
 // Global styles
 *, *::before, *::after {
@@ -37,5 +39,7 @@ a{
     text-decoration: none;
     color: inherit;
 }
-
+img {
+    max-height: 4rem;
+}
 

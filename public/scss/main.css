@@ -118,6 +118,7 @@ button.bijvoeglijk_naamwoord, a.bijvoeglijk_naamwoord {
 }
 button.bijvoeglijk_naamwoord#categorie, a.bijvoeglijk_naamwoord#categorie {
   background-color: var(--adjectives);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 -10px 0 -5px #4EACE4, 0 -10px 1px -4px rgba(0, 0, 0, 0.15), 0 -20px 0 -10px #4E94BC, 0 -20px 1px -9px rgba(0, 0, 0, 0.15), 4px 6px 4px 0px rgba(0, 0, 0, 0.25);
 }
 button.voornaamwoord, a.voornaamwoord {
   border-color: var(--determiners);
@@ -199,9 +200,15 @@ fieldset label {
   background-color: #FFD4D4;
 }
 
+.langwoord * {
+  font-size: 0.7rem;
+}
+
 body {
-  height: 100dvh;
-  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -219,10 +226,13 @@ body nav img {
   height: 100%;
 }
 body main {
-  height: calc(100% - 2rem);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 body main .soundboard {
-  height: 100%;
+  flex: 1;
   display: grid;
   grid-template-rows: 1fr 5fr;
   background-color: #D2E1FF;
@@ -269,6 +279,12 @@ body main .soundboard .middle .nav-left button, body main .soundboard .middle .n
   border-radius: 0px 1rem 1rem 0px;
   border: 1px solid #DDD;
   box-shadow: 4px 6px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+body main .soundboard .middle .nav-left button img, body main .soundboard .middle .nav-left a img, body main .soundboard .middle .nav-left fieldset img {
+  order: -2;
+  z-index: 3;
 }
 body main .soundboard .middle .nav-left button.active, body main .soundboard .middle .nav-left a.active, body main .soundboard .middle .nav-left fieldset.active {
   background-color: #FFD4D4;
@@ -299,8 +315,19 @@ body main .soundboard .middle .dynamic {
   display: none;
 }
 
-.edit-mode .blur {
-  filter: blur(5px); /* Voeg een blur toe aan de main content in de bewerkingsmodus */
+.blur {
+  filter: blur(2px); /* Voeg een blur toe aan de main content in de bewerkingsmodus */
+}
+.blur:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Donkere overlay met 50% doorzichtigheid */
+  pointer-events: none; /* Zorg ervoor dat de overlay de interactie met de inhoud niet blokkeert */
+  z-index: 3; /* Zorg ervoor dat het boven de inhoud ligt */
 }
 
 .edit-button {
@@ -366,6 +393,80 @@ body main .soundboard .middle .dynamic {
   border: 0.3rem solid #FF9E9E;
 }
 
+#loader {
+  position: relative;
+  width: 4.5em;
+  height: 4.5em;
+  transform: rotate(165deg);
+}
+#loader:before, #loader:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 1.25em;
+  transform: translate(-50%, -50%);
+}
+#loader:before {
+  animation: before 2s infinite;
+}
+#loader:after {
+  animation: after 2s infinite;
+}
+
+@keyframes before {
+  0% {
+    width: 2.5em;
+    box-shadow: 1em 1.5em #8EB5FF, -1em -1.5em #D2E1FF;
+  }
+  35% {
+    width: 4.5em;
+    box-shadow: 0 1.5em #8EB5FF, 0 -1.5em #D2E1FF;
+  }
+  70% {
+    width: 2.5em;
+    box-shadow: -1em 1.5em #8EB5FF, 1em -1.5em #D2E1FF;
+  }
+  100% {
+    box-shadow: 1em 1.5em #8EB5FF, -1em -1.5em #D2E1FF;
+  }
+}
+@keyframes after {
+  0% {
+    height: 2.5em;
+    box-shadow: -1.5em 1em #FF9E9E, 1.5em -1em #FFD4D4;
+  }
+  35% {
+    height: 4.5em;
+    box-shadow: -1.5em 0 #FF9E9E, 1.5em 0 #FFD4D4;
+  }
+  70% {
+    height: 2.5em;
+    box-shadow: -1.5em -1em #FF9E9E, 1.5em 1em #FFD4D4;
+  }
+  100% {
+    box-shadow: -1.5em 1em #FF9E9E, 1.5em -1em #FFD4D4;
+  }
+}
+.loader {
+  position: absolute;
+  top: calc(50% - 2.25em);
+  left: calc(50% - 2.25em);
+}
+
+#loadercontainer {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+}
+
 #account .center {
   padding-right: 0.5rem;
   padding-bottom: 0.5rem;
@@ -378,9 +479,21 @@ body main .soundboard .middle .dynamic {
   grid-template-rows: 2fr 3fr;
   gap: 1rem;
 }
+#account .center .settings a {
+  display: flex;
+  flex-direction: column;
+}
+#account .center .settings a img {
+  order: -2;
+}
 #account .center .settings #avatar a {
   height: 100%;
   border: 0.4rem solid var(--pronouns);
+}
+#account .center .settings #avatar a img {
+  height: 8rem;
+  width: 8rem;
+  max-height: 8rem;
 }
 #account .center .settings section:not(#avatar) {
   display: grid;
@@ -427,9 +540,13 @@ body main .soundboard .middle .dynamic {
   border: 0.4rem solid #FF9E9E;
 }
 
+.keyboard-key {
+  font-size: 2.5rem;
+}
+
 @font-face {
   font-family: "ITC Avant Garde Gothic";
-  src: url("../fonts/ITCAvantGardeGothicBold.otf.otf") format("opentype");
+  src: url("../fonts/ITCAvantGardeGothicBold.otf") format("opentype");
 }
 *, *::before, *::after {
   box-sizing: border-box;
@@ -452,4 +569,8 @@ body {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+img {
+  max-height: 4rem;
 }/*# sourceMappingURL=main.css.map */

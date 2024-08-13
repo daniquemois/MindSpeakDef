@@ -1,8 +1,19 @@
-.edit-mode{
-    .blur{
-        filter: blur(5px); /* Voeg een blur toe aan de main content in de bewerkingsmodus */
+
+.blur{
+    filter: blur(2px); /* Voeg een blur toe aan de main content in de bewerkingsmodus */
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Donkere overlay met 50% doorzichtigheid */
+        pointer-events: none; /* Zorg ervoor dat de overlay de interactie met de inhoud niet blokkeert */
+        z-index: 3; /* Zorg ervoor dat het boven de inhoud ligt */
     }
 }
+
 .edit-button {
     display: none; /* Verberg de bewerkingsknoppen standaard */
     position: absolute;

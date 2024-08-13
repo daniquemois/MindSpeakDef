@@ -12,7 +12,7 @@ function getCategoryFromURL() {
 // Check if the page does not contain "toetsenbord" or "account" in the URL
 function shouldRunScript() {
     const path = window.location.pathname.toLowerCase();
-    return !path.includes('toetsenbord') && !path.includes('account');
+    return !path.includes('toetsenbord') && !path.includes('account') && !path.includes('mijnklas');
 }
 
 if (shouldRunScript()) {
@@ -74,6 +74,16 @@ if (shouldRunScript()) {
         renderPage(filteredWords, currentPage, specialTile5Word, specialTile10Word);
     }
 
+    function markLongWords() {
+        const tiles = document.querySelectorAll('.dynamic a span');
+        
+        tiles.forEach(tile => {
+            if (tile.innerText.length > 12) {
+                tile.parentElement.classList.add('langwoord');
+            }
+        });
+    }
+
     function renderPage(words, page, specialTile5Word, specialTile10Word) {
         const tiles = document.querySelectorAll('.dynamic a'); // Select all buttons in the .dynamic section
         
@@ -129,7 +139,7 @@ if (shouldRunScript()) {
             tileIndex++;
             wordIndex++;
         }
-
+        markLongWords();
         // Add a "Terug" button if we're not on the first page
         if (page > 0) {
             const backTile = tiles[0];
@@ -187,22 +197,23 @@ if (shouldRunScript()) {
 
     // Helper function to set the content of a tile
     function setTileContent(tile, word) {
-        if (word.imageUrl) {
+        // Check if the word has an image URL and is not "ja" or "nee"
+        if (word.imageUrl && word.word.toLowerCase() !== 'ja' && word.word.toLowerCase() !== 'nee') {
             const imgElement = document.createElement('img');
             imgElement.src = word.imageUrl;
             imgElement.alt = word.word;
             imgElement.classList.add('tile-image'); // Add a CSS class for styling
             tile.appendChild(imgElement);
         }
-
+    
         const textElement = document.createElement('span');
         textElement.innerText = word.word;
         tile.appendChild(textElement);
-
+    
         if (word.wordType) {
             tile.classList.add(word.wordType);
         }
-
+    
         if (word.isCategory) {
             tile.id = 'categorie';
             if (word.link) {

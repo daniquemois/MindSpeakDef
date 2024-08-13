@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Check if the current URL contains 'mijnklas'
+    const currentPath = window.location.pathname;
+
+    if (currentPath.includes('mijnklas')) {
+        console.log('Edit.js script will not run on this page.');
+        return; // Stop execution of the script
+    }
+
     const tiles = document.querySelectorAll('.dynamic a');
     const editPopup = document.getElementById('editPopup');
     const penToolButton = document.getElementById('pentool');
@@ -154,7 +162,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Toggle de bewerkingsmodus aan/uit wanneer op de pentool-knop wordt geklikt
     penToolButton.addEventListener('click', () => {
-        document.body.classList.toggle('edit-mode');
+        const mainElement = document.querySelector('main'); // Correcte selectie van het <main> element
+        if (mainElement) {
+            mainElement.classList.toggle('edit-mode');
+        }
     });
 
     // Event listener voor de verwijderknop om de localStorage te wissen

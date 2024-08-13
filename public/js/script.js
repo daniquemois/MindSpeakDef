@@ -6,13 +6,12 @@ import './voorspellen.js';
 import './nav.js';
 import './edit.js';
 import './fallback.js';
+import './add.js';
 
 async function fetchData() {
     try {
         const response = await fetch('/api/data');
         const data = await response.json();
-
-        // Verwerk de data
         processData(data);
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -21,13 +20,11 @@ async function fetchData() {
 
 function processData(data) {
     const homepageWords = [];
-
-    // Zoek naar woorden met de categorie "homepage"
     for (let row of data) {
         if (row.length > 3) {
             const categories = row[3].split(',');
             if (categories.includes('homepage')) {
-                const tileId = `tile-${row[0].toLowerCase().replace(/\s+/g, '-')}`; // Uniek ID gebaseerd op het woord
+                const tileId = `tile-${row[0].toLowerCase().replace(/\s+/g, '-')}`;
                 homepageWords.push({
                     word: row[0],
                     priority: parseInt(row[2]),
@@ -35,20 +32,18 @@ function processData(data) {
                     imageUrl: row[5] ? `/images/${row[5]}` : null,
                     isCategory: row[4] === 'ja',
                     link: row[6] || null,
-                    tileId: tileId // Voeg tileId toe
+                    tileId: tileId
                 });
             }
         }
     }
 
-    // Sorteer de woorden op prioriteit
     homepageWords.sort((a, b) => a.priority - b.priority);
 
-    // Voeg de woorden en afbeeldingen toe aan de juiste tegels
     for (let i = 0; i < homepageWords.length; i++) {
         const tile = document.getElementById(`hp${homepageWords[i].priority}`);
         if (tile) {
-            tile.dataset.tileId = homepageWords[i].tileId; // Voeg tileId toe aan de tegel
+            tile.dataset.tileId = homepageWords[i].tileId;
 
             const savedTileData = JSON.parse(localStorage.getItem(tile.dataset.tileId));
             if (savedTileData) {
@@ -84,10 +79,8 @@ function processData(data) {
                         newDiv.innerText = tile.innerText;
                         outputDiv.appendChild(newDiv);
                         outputDiv.scrollLeft = outputDiv.scrollWidth;
-                        console.log('Added word to output:', tile.innerText);
 
-                        checkOrSetCookies();
-
+                        updateCookieWithOutput(); // Update the cookie when the output changes
                     }
                 });
             }
@@ -95,50 +88,33 @@ function processData(data) {
     }
 }
 
-function checkOrSetCookies() {
-
+function updateCookieWithOutput() {
     const outputContainer = document.getElementById('output');
     const woorden = Array.from(outputContainer.children).map(child => child.innerText.trim());
     const zin = woorden.join(' ');
-    const lastWord = woorden[woorden.length - 1]; // Pak het laatste woord
-
-    console.log('checkOrSetCookies with zin:', zin);
-
-    // check if the cookie exists
-    if (document.cookie.indexOf('zin=') === -1) {
-        // if it doesn't exist, create it
-        document.cookie = `zin=${zin}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
-        console.log('Cookie created:', `zin=${zin}; expires=Fri, 31 Dec 9999 23:59:59 GMT`);
-    } else {
-        // if it exists, update it
-        document.cookie = `zin=${zin}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
-        console.log('Cookie updated:', `zin=${zin}; expires=Fri, 31 Dec 9999 23:59:59 GMT`);
-    }
-
-    // console log our zin cookie
-    console.log('Zin cookie:', document.cookie);
+    document.cookie = `zin=${encodeURIComponent(zin)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/`;
 }
 
-// Check if cookie is set and if so, update the output
-function checkCookie() {
-    // check if the cookie exists
-    if (document.cookie.indexOf('zin=') !== -1) {
-        // if it exists, update the output
-        const zin = document.cookie.split('=')[1];
+function loadOutputFromCookie() {
+    const cookieValue = document.cookie.split('; ').find(row => row.startsWith('zin='));
+    if (cookieValue) {
+        const zin = decodeURIComponent(cookieValue.split('=')[1]);
         const outputDiv = document.getElementById('output');
-        if (outputDiv) {
-            const newDiv = document.createElement('div');
-            newDiv.innerText = zin;
-            outputDiv.appendChild(newDiv);
+        if (outputDiv && zin) {
+            outputDiv.innerHTML = ''; // Clear current output
+            const words = zin.split(' ');
+            words.forEach(word => {
+                const newDiv = document.createElement('div');
+                newDiv.innerText = word;
+                outputDiv.appendChild(newDiv);
+            });
             outputDiv.scrollLeft = outputDiv.scrollWidth;
-            console.log('Added word to output:', zin);
         }
     }
 }
 
-// Check for cookies on page load
-checkCookie();
-
+// Load the output from the cookie on page load
+document.addEventListener('DOMContentLoaded', loadOutputFromCookie);
 
 if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html')) {
     window.onload = fetchData;

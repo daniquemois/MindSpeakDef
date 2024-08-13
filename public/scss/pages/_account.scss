@@ -9,10 +9,22 @@
             display: grid;
             grid-template-rows: 2fr 3fr;
             gap: 1rem;
+            a{
+                display: flex;
+                flex-direction: column;
+                img{
+                    order: -2;
+                }
+            }
             #avatar{
                 a{
                     height: 100%;
                     border: .4rem solid var(--pronouns);
+                    img{
+                        height: 8rem;
+                        width: 8rem;
+                        max-height: 8rem;
+                    }
                 }
             }
             section:not(#avatar){

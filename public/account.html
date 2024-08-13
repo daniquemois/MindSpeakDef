@@ -12,12 +12,32 @@
 <body id="account">
   <header>
     <nav>
-      <p>navigeren</p>
+      <img src="/images/pentool.svg" id="pentool">
+      <img src="/images/looptool.svg" id="looptool">
     </nav>
   </header>
+
+  <div id="editPopup" class="edit-popup">
+    <form id="editForm">
+      <div>
+        <label for="tileLabel">Label:</label>
+        <input type="text" id="tileLabel" name="tileLabel">
+      </div>
+
+      <div>
+        <label for="tileUpload">Upload Afbeelding:</label>
+        <input type="file" id="tileUpload" name="tileUpload" accept="image/*">
+      </div>
+      <div>
+        <button type="button" id="saveTile">Opslaan</button>
+        <button type="button" id="cancelEdit">Annuleren</button>
+      </div>
+    </form>
+  </div>
+
   <main>
     <section class="soundboard">
-    <article class="topbar">
+      <article class="topbar">
         <button id="spreek">Spreek
           <img src="/images/spreekknop.svg" alt="Spreken" class="tile-image">
         </button>
@@ -34,25 +54,51 @@
 
       <article class="middle">
         <section class="nav-left">
-          <a href="/index.html">Start</a>
-                    <a href="/categories/snelspraak.html">Snelle boodschappen</a>
-          <a>Voorspellen</a>
-          <a href="/toetsenbord.html">Toetsenbord</a>
-          <a href="/account.html">Danique</a>
+          <a href="/index.html">Start
+            <img src="/images/huis.svg" alt="Start" class="tile-image">
+          </a>
+          <a href="/categories/snelspraak.html">Snelle boodschappen
+            <img src="/images/vuur.svg" alt="Vuur" class="tile-image">
+          </a>
+          <fieldset>
+            <img src="/images/robot.svg" alt="robot" class="tile-image">
+            <input type="checkbox" id="aiToggle" name="aiToggle" />
+            <label for="aiToggle">Voorspellen</label>
+          </fieldset>
+          <a href="/toetsenbord.html">Toetsenbord
+            <img src="/images/toetsenbord.svg" alt="Toetsenbord" class="tile-image">
+          </a>
+          <a href="/account.html" class="active">Danique
+            <img src="/images/ik.svg" alt="Danique" class="tile-image">
+          </a>
         </section>
 
         <section class="center">
             <article class="settings">
                 <section id="avatar">
-                    <a id="acc1">Danique</a>
+                    <a id="acc1">Danique
+                      <img src="/images/ik.svg" alt="ik" class="tile-image">
+                    </a>
                 </section>
                 <section>
-                    <a id="raster">raster</a>
-                    <a id="instellingen">instellingen</a>
-                    <a id="toetsenbord">toetsenbord</a>
-                    <a id="kleuren">kleuren</a>
-                    <a id="lettertype">lettertype</a>
-                    <a id="foto">foto's</a>
+                    <a id="raster">raster
+                      <img src="/images/raster.svg" alt="raster" class="tile-image">
+                    </a>
+                    <a id="instellingen">instellingen
+                      <img src="/images/instellingen.svg" alt="instellingen" class="tile-image">
+                    </a>
+                    <a id="toetsenbord">toetsenbord
+                      <img src="/images/toetsenbord.svg" alt="toetsenbord" class="tile-image">
+                    </a>
+                    <a id="kleuren">kleuren
+                      <img src="/images/kleuren.svg" alt="kleuren" class="tile-image">
+                    </a>
+                    <a id="lettertype">lettertype
+                      <img src="/images/lettertype.svg" alt="lettertype" class="tile-image">
+                    </a>
+                    <a id="foto">foto's
+                      <img src="/images/foto.svg" alt="foto" class="tile-image">
+                    </a>
                 </section>
             </article>
             <article class="avatar">

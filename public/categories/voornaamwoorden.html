@@ -12,12 +12,32 @@
 <body>
   <header>
     <nav>
-      <p>navigeren</p>
+      <img src="/images/pentool.svg" id="pentool">
+      <img src="/images/looptool.svg" id="looptool">
     </nav>
   </header>
- <main>
+
+  <div id="editPopup" class="edit-popup">
+    <form id="editForm">
+      <div>
+        <label for="tileLabel">Label:</label>
+        <input type="text" id="tileLabel" name="tileLabel">
+      </div>
+
+      <div>
+        <label for="tileUpload">Upload Afbeelding:</label>
+        <input type="file" id="tileUpload" name="tileUpload" accept="image/*">
+      </div>
+      <div>
+        <button type="button" id="saveTile">Opslaan</button>
+        <button type="button" id="cancelEdit">Annuleren</button>
+      </div>
+    </form>
+  </div>
+
+  <main>
     <section class="soundboard">
-    <article class="topbar">
+      <article class="topbar">
         <button id="spreek">Spreek
           <img src="/images/spreekknop.svg" alt="Spreken" class="tile-image">
         </button>
@@ -34,11 +54,23 @@
 
       <article class="middle">
         <section class="nav-left">
-          <a href="/index.html">Start</a>
-                    <a href="/categories/snelspraak.html">Snelle boodschappen</a>
-          <a>Voorspellen</a>
-          <a href="/toetsenbord.html">Toetsenbord</a>
-          <a href="/account.html">Danique</a>
+          <a href="/index.html">Start
+            <img src="/images/huis.svg" alt="Start" class="tile-image">
+          </a>
+          <a href="/categories/snelspraak.html">Snelle boodschappen
+            <img src="/images/vuur.svg" alt="Vuur" class="tile-image">
+          </a>
+          <fieldset>
+            <img src="/images/robot.svg" alt="robot" class="tile-image">
+            <input type="checkbox" id="aiToggle" name="aiToggle" />
+            <label for="aiToggle">Voorspellen</label>
+          </fieldset>
+          <a href="/toetsenbord.html">Toetsenbord
+            <img src="/images/toetsenbord.svg" alt="Toetsenbord" class="tile-image">
+          </a>
+          <a href="/account.html">Danique
+            <img src="/images/ik.svg" alt="Danique" class="tile-image">
+          </a>
         </section>
 
         <section class="dynamic">
