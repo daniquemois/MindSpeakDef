@@ -1,16 +1,17 @@
 import express from 'express';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
-import cors from 'cors';  // Importeer CORS
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
-const port = 3001;
+const port = process.env.TTS_PORT || 3001;
+const host = process.env.HOST || 'localhost';
 
 // Gebruik CORS om verzoeken van andere domeinen toe te staan
 app.use(cors({
-    origin: 'http://localhost:3000', // Stel de origin in die je wilt toestaan
+    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
 }));
 
 app.use(express.json());
@@ -53,7 +54,6 @@ app.post('/api/tts', async (req, res) => {
     }
 });
 
-
-app.listen(port, () => {
-    console.log(`TTS Server running on http://localhost:${port}`);
+app.listen(port, host, () => {
+    console.log(`TTS Server running on http://${host}:${port}`);
 });

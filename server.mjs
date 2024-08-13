@@ -1,7 +1,5 @@
 import express from 'express';
-import {
-  google
-} from 'googleapis';
+import { google } from 'googleapis';
 import path from 'path';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
@@ -12,11 +10,10 @@ dotenv.config();
 // Maak de express-app
 const app = express();
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || 'localhost';
 
 // Setup cache
-const cache = new NodeCache({
-  stdTTL: 600
-}); // Cache items voor 10 minuten
+const cache = new NodeCache({ stdTTL: 600 }); // Cache items voor 10 minuten
 
 // Zorg dat express JSON kan parsen
 app.use(express.json());
@@ -57,17 +54,13 @@ app.get('/api/data', async (req, res) => {
     const data = await fetchSheetData();
     res.json(data);
   } catch (error) {
-    res.status(500).json({
-      error: 'Error fetching data from Google Sheets'
-    });
+    res.status(500).json({ error: 'Error fetching data from Google Sheets' });
   }
 });
 
 // TTS route
 app.post('/api/tts', async (req, res) => {
-  const {
-    text
-  } = req.body;
+  const { text } = req.body;
   console.log('Received text:', text);
   try {
     const response = await fetch('https://api.openai.com/v1/audio/speech', {
@@ -85,19 +78,13 @@ app.post('/api/tts', async (req, res) => {
 
     const data = await response.json();
     if (data.audioContent) {
-      res.json({
-        audioContent: data.audioContent
-      });
+      res.json({ audioContent: data.audioContent });
     } else {
-      res.status(500).json({
-        error: 'Failed to synthesize speech'
-      });
+      res.status(500).json({ error: 'Failed to synthesize speech' });
     }
   } catch (error) {
     console.error('Error:', error);
-    res.status(500).json({
-      error: 'Internal Server Error'
-    });
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
@@ -145,9 +132,9 @@ app.post('/api/suggestions', async (req, res) => {
       body: JSON.stringify({
         model: 'gpt-4',
         messages: [{
-            role: 'system',
-            content: `Je bent een taalassistent. Je ontvangt een woord en je moet een lijst met maximaal 25 woorden geven die er logisch op volgen in een kindvriendelijke zin. Houd er rekening mee dat alle werkwoorden in hun infinitiefvorm staan in de dataset, dat betekent dus dat je rekening hoeft te houden met dat "ik willen" bijvoorbeeld grammaticaal niet klopt.`
-          },
+          role: 'system',
+          content: `Je bent een taalassistent. Je ontvangt een woord en je moet een lijst met maximaal 25 woorden geven die er logisch op volgen in een kindvriendelijke zin. Houd er rekening mee dat alle werkwoorden in hun infinitiefvorm staan in de dataset, dat betekent dus dat je rekening hoeft te houden met dat "ik willen" bijvoorbeeld grammaticaal niet klopt.`
+        },
           {
             role: 'user',
             content: `Wat zijn mogelijke woorden die kunnen volgen op het woord "${prompt}"?`
@@ -163,8 +150,8 @@ app.post('/api/suggestions', async (req, res) => {
 
     // Combineer alle suggesties uit de verschillende keuzes en maak ze uniek
     let aiSuggestions = aiData.choices.map(choice => choice.message.content.trim().split(/[ ,\n]+/))
-      .flat()
-      .filter(word => word && isNaN(word) && word !== '1.');
+        .flat()
+        .filter(word => word && isNaN(word) && word !== '1.');
 
     // Verwijder duplicaten
     aiSuggestions = [...new Set(aiSuggestions)];
@@ -188,15 +175,11 @@ app.post('/api/suggestions', async (req, res) => {
 
     console.log('Final suggestions:', finalSuggestions);
 
-    res.json({
-      suggestions: finalSuggestions
-    });
+    res.json({ suggestions: finalSuggestions });
 
   } catch (error) {
     console.error('Error fetching suggestions:', error);
-    res.status(500).json({
-      error: 'Internal Server Error'
-    });
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
@@ -235,7 +218,12 @@ app.post('/api/check-grammar', async (req, res) => {
   }
 });
 
+// Zorg ervoor dat index.html wordt geserveerd bij de root URL
+app.get('/', (req, res) => {
+  res.sendFile(path.join(path.resolve(), 'public', 'index.html'));
+});
+
 // Start de server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Server running on http://${HOST}:${PORT}`);
 });

@@ -1,5 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Controleer of de huidige pagina index.html is
+    const currentPage = window.location.pathname.split('/').pop().replace('.html', '');
+    
     const aiToggle = document.getElementById('aiToggle');
+
+    // Als het niet index.html is, schakel de aiToggle checkbox uit
+    if (currentPage !== 'index') {
+        if (aiToggle) {
+            aiToggle.disabled = true; // Schakel de checkbox uit
+            aiToggle.checked = false; // Zorg ervoor dat hij niet geselecteerd is
+        }
+        return; // Voer de rest van de code niet uit
+    }
+
     const outputContainer = document.getElementById('output');
     const loaderContainer = document.getElementById('loadercontainer'); // Pak de loadercontainer op
     const mainElement = document.querySelector('main');
