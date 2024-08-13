@@ -88,5 +88,5 @@ mindspeak/
 Dit project is gelicenseerd onder de MIT-licentie.
 
 ## Contact
-Voor vragen of ondersteuning, neem contact op via [daniquelammertink@gmail.com](mailto:daniquelammertink@gmail.com).
+Voor vragen of ondersteuning, neem contact op via daniquelammertink@gmail.com
 ```
